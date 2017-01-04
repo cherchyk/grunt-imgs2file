@@ -7,8 +7,8 @@
 		"noImplicitAny": false,
 		"removeComments": true,
 		"noLib": false,
-		"noUnusedParameters": true,
-		"noUnusedLocals": true,
+		//"noUnusedParameters": true,
+		//"noUnusedLocals": true,
 		"allowSyntheticDefaultImports": true
 	}
 }

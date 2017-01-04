@@ -95,9 +95,6 @@ function doGruntJob(grunt: IGrunt) {
 		grunt.log.warn('this.files:::');
 		grunt.log.ok(JSON.stringify(this.files));
 
-		grunt.log.warn('this.filesSrc:::');
-		grunt.log.ok(JSON.stringify(this.filesSrc));
-
 		// Merge task-specific and/or target-specific options with these defaults.
 		var options: Options = this.options({
 			separator: '|',
@@ -140,6 +137,5 @@ function doGruntJob(grunt: IGrunt) {
 	});
 
 }
-
 
 export = doGruntJob;

@@ -7,7 +7,6 @@ const IMG_TYPES = [
     { ext: 'gif', mime: 'image/gif' }
 ];
 const PATH_SEP = '/';
-const ASSET_SEP = '|';
 function recursivelyGetAllImages(dir, pathPrefix) {
     var result = [];
     var res = fs.readdirSync(dir);
@@ -42,11 +41,16 @@ function recursivelyGetAllImages(dir, pathPrefix) {
 function doGruntJob(grunt) {
     grunt.registerMultiTask('imgs2file', 'Collects image files in target folder and writes their content to destination file in Base64.', function () {
         grunt.log.warn('HELLO again.');
+        grunt.log.warn('this.files:::');
         grunt.log.ok(JSON.stringify(this.files));
+        grunt.log.warn('this.filesSrc:::');
+        grunt.log.ok(JSON.stringify(this.filesSrc));
         var options = this.options({
-            separator: grunt.option('separator') ? grunt.option('separator') : '|',
-            path_prefix: grunt.option('path_prefix') ? grunt.option('separator') : 'assets/'
+            separator: '|',
+            path_prefix: 'assets/'
         });
+        grunt.log.warn('options:::');
+        grunt.log.ok(JSON.stringify(options));
         this.files.forEach(function (f) {
             var src = f.src.filter(function (filepath) {
                 if (!grunt.file.exists(filepath)) {
