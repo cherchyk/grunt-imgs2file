@@ -1,47 +1,48 @@
 {
-  "name": "grunt-imgs2file",
-  "description": "Collects image files in target folder and writes their content to destination file in Base64.",
-  "version": "0.1.111",
-  "homepage": "https://github.com/cherchyk/grunt-imgs2file",
-  "author": {
-    "name": "Bohdan Cherchyk",
-    "email": "cherchyk@gmail.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/cherchyk/grunt-imgs2file.git"
-  },
-  "bugs": {
-    "url": "https://github.com/cherchyk/grunt-imgs2file/issues"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/cherchyk/grunt-imgs2file/blob/master/LICENSE-MIT"
-    }
-  ],
-  "engines": {
-    "node": ">= 0.8.0"
-  },
-  "main": "tasks/imgs2file.js",
-  "scripts": {
-    "test": "grunt test"
-  },
-  "devDependencies": {
-    "@types/lodash": "^4.14.45",
-    "grunt": "~0.4.5",
-    "grunt-contrib-clean": "^0.5.0",
-    "grunt-contrib-jshint": "^0.9.2",
-    "grunt-contrib-nodeunit": "^0.3.3",
-    "grunt-ts": "^6.0.0-beta.3",
-    "grunt-tslint": "^4.0.0",
-    "tslint": "^4.2.0",
-    "typescript": "^2.1.4"
-  },
-  "keywords": [
-    "gruntplugin"
-  ],
-  "dependencies": {
-    "lodash": "^4.17.4"
-  }
+	"name": "grunt-imgs2file",
+	"description": "Collects image files in target folder and writes their content to destination file in Base64.",
+	"version": "0.1.113",
+	"homepage": "https://github.com/cherchyk/grunt-imgs2file",
+	"author": {
+		"name": "Bohdan Cherchyk",
+		"email": "cherchyk@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/cherchyk/grunt-imgs2file.git"
+	},
+	"bugs": {
+		"url": "https://github.com/cherchyk/grunt-imgs2file/issues"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "https://github.com/cherchyk/grunt-imgs2file/blob/master/LICENSE-MIT"
+		}
+	],
+	"engines": {
+		"node": ">= 0.8.0"
+	},
+	"main": "tasks/imgs2file.js",
+	"scripts": {
+		"test": "grunt test"
+	},
+	"devDependencies": {
+		"grunt": "~0.4.5",
+		"grunt-contrib-clean": "^0.5.0",
+		"grunt-contrib-jshint": "^0.9.2",
+		"grunt-contrib-nodeunit": "^0.3.3",
+		"grunt-ts": "^6.0.0-beta.3",
+		"grunt-tslint": "^4.0.0",
+		"tslint": "^4.2.0",
+		"typescript": "^2.1.4"
+	},
+	"keywords": [
+		"gruntplugin"
+	],
+	"dependencies": {
+		"@types/lodash": "^4.14.45",
+		"@types/node": "^6.0.56",
+		"lodash": "^4.17.4"
+	}
 }

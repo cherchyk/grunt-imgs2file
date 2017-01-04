@@ -8,6 +8,77 @@
 
 'use strict';
 
+
+
+import * as fs from 'fs';
+import { WriteStream } from 'fs';
+
+import * as _ from 'lodash';
+
+
+interface ImgType {
+	mime: string;
+	ext: string;
+}
+
+const IMG_TYPES: Array<ImgType> = [
+	{ ext: 'png', mime: 'image/png' },
+	{ ext: 'jpg', mime: 'image/jpg' },
+	{ ext: 'gif', mime: 'image/gif' }];
+const PATH_SEP = '/';
+const ASSET_SEP = '|';
+
+interface FileInfo {
+	mime: string;
+	assetPath: string;
+	filePath: string;
+}
+//http://stackoverflow.com/questions/8110294/nodejs-base64-image-encoding-decoding-not-quite-working
+function recursivelyGetAllImages(dir: string, pathPrefix: string): Array<FileInfo> {
+	var result: Array<FileInfo> = [];
+
+	var res = fs.readdirSync(dir);
+	_.each(res, (fName: string) => {
+
+		var fPath = dir + PATH_SEP + fName;
+
+		var stats = fs.statSync(fPath);
+
+		if (stats.size == 0) {
+			return;
+		}
+
+		if (stats.isFile()) {
+			var imgType: ImgType = _.find(IMG_TYPES, (it: ImgType) => {
+				return _.endsWith(fName.toLowerCase(), it.ext);
+			});
+
+			if (!imgType) {
+				return;
+			}
+
+			result.push({
+				mime: imgType.mime,
+				filePath: fPath,
+				assetPath: pathPrefix + fName
+			});
+
+			return;
+		}
+
+		if (stats.isDirectory()) {
+			var dirResult: Array<FileInfo> = recursivelyGetAllImages(fPath, pathPrefix + fName + PATH_SEP);
+			result = result.concat(dirResult);
+			return;
+		}
+	});
+
+	return result;
+}
+
+
+
+
 export = function (grunt) {
 
 	// Please see the Grunt documentation for more information regarding task
@@ -15,7 +86,7 @@ export = function (grunt) {
 
 	grunt.registerMultiTask('imgs2file', 'Collects image files in target folder and writes their content to destination file in Base64.', function () {
 
-		grunt.log.warn('HELLO.');
+		grunt.log.warn('HELLO again.');
 
 
 		// Merge task-specific and/or target-specific options with these defaults.
