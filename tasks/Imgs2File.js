@@ -52,7 +52,8 @@ function doGruntJob(grunt) {
     grunt.registerMultiTask('imgs2file', 'Collects image files in target folder and writes their content to destination file in Base64.', function () {
         var options = this.options({
             separator: '|',
-            path_prefix: null
+            path_prefix: null,
+            assets_file: false
         });
         grunt.log.warn('this:::');
         grunt.log.ok(JSON.stringify(this));
@@ -72,33 +73,29 @@ function doGruntJob(grunt) {
             let fileInfos = getImages(src, options.path_prefix);
             grunt.log.ok(JSON.stringify(src));
             grunt.log.ok(JSON.stringify(fileInfos));
-            let writeStreamMain = fs.createWriteStream(f.dest, {
-                flags: 'w',
-                encoding: 'utf8',
-                fd: null,
-                mode: 0o666,
-                autoClose: true,
-            });
-            let writeStream = fs.createWriteStream(f.dest + '.assets', {
-                flags: 'w',
-                encoding: 'utf8',
-                fd: null,
-                mode: 0o666,
-                autoClose: true,
-            });
+            grunt.file.defaultEncoding = 'base64';
+            let fMain = '';
+            let fAssets = '';
             _.each(fileInfos, (file, index) => {
                 if (index > 0) {
-                    writeStreamMain.write(options.separator);
-                    writeStream.write(" ");
+                    fMain += options.separator;
+                    fAssets += options.separator;
+                    ;
                 }
-                let content = fs.readFileSync(file.src, 'base64');
+                let content = grunt.file.read(file.src);
                 let toSave = `${file.assetPath}${options.separator}data:${file.mime};base64,${content}`;
-                writeStreamMain.write(toSave);
-                writeStream.write(file.assetPath);
+                fMain += toSave;
+                fAssets += file.assetPath;
+                grunt.log.writeln(toSave);
                 grunt.log.writeln(file.assetPath);
             });
-            writeStreamMain.end();
-            writeStream.end();
+            grunt.file.write(f.dest, fMain, { encoding: 'utf8' });
+            if (options.assets_file === true) {
+                grunt.file.write(f.dest + '.assets', fAssets, { encoding: 'utf8' });
+            }
+            else {
+                grunt.file.delete(f.dest + '.assets');
+            }
         });
     });
 }

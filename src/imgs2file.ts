@@ -30,6 +30,7 @@ const PATH_SEP = '/';
 interface Options {
 	separator: string;
 	path_prefix: string;
+	assets_file: boolean;
 }
 
 interface FileInfo {
@@ -112,7 +113,8 @@ function doGruntJob(grunt: IGrunt) {
 		// Merge task-specific and/or target-specific options with these defaults.
 		var options: Options = this.options({
 			separator: '|',
-			path_prefix: null
+			path_prefix: null,
+			assets_file: false
 		});
 
 
@@ -175,40 +177,55 @@ function doGruntJob(grunt: IGrunt) {
 
 
 
-			let writeStreamMain: WriteStream = fs.createWriteStream(f.dest, {
-				flags: 'w',
-				encoding: 'utf8',
-				fd: null,
-				mode: 0o666,
-				autoClose: true,
-			});
-			let writeStream: WriteStream = fs.createWriteStream(f.dest + '.assets', {
-				flags: 'w',
-				encoding: 'utf8',
-				fd: null,
-				mode: 0o666,
-				autoClose: true,
-			});
+			// let writeStreamMain: WriteStream = fs.createWriteStream(f.dest, {
+			// 	flags: 'w',
+			// 	encoding: 'utf8',
+			// 	fd: null,
+			// 	mode: 0o666,
+			// 	autoClose: true,
+			// });
+			// let writeStream: WriteStream = fs.createWriteStream(f.dest + '.assets', {
+			// 	flags: 'w',
+			// 	encoding: 'utf8',
+			// 	fd: null,
+			// 	mode: 0o666,
+			// 	autoClose: true,
+			// });
 
+			grunt.file.defaultEncoding = 'base64';
+
+			let fMain: string = '';
+			let fAssets: string = '';
 
 			_.each(fileInfos, (file: FileInfo, index: number) => {
 				if (index > 0) {
-					writeStreamMain.write(options.separator);
-					writeStream.write(" ");
+					fMain += options.separator;
+					fAssets += options.separator;;
 				}
 
-				let content: string = fs.readFileSync(file.src, 'base64');
+				//let content: string = fs.readFileSync(file.src, 'base64');
+				let content: string = grunt.file.read(file.src);
+
 				let toSave = `${file.assetPath}${options.separator}data:${file.mime};base64,${content}`;
 
-				writeStreamMain.write(toSave);
+				// writeStreamMain.write(toSave);
+				// writeStream.write(file.assetPath);
+				fMain += toSave;
+				fAssets += file.assetPath;
 
-				writeStream.write(file.assetPath);
-
+				grunt.log.writeln(toSave);
 				grunt.log.writeln(file.assetPath);
 
 			});
-			writeStreamMain.end();
-			writeStream.end();
+			// writeStreamMain.end();
+			// writeStream.end();
+			grunt.file.write(f.dest, fMain, { encoding: 'utf8' });
+			if (options.assets_file === true) {
+				grunt.file.write(f.dest + '.assets', fAssets, { encoding: 'utf8' });
+			}
+			else {
+				grunt.file.delete(f.dest + '.assets');
+			}
 
 
 
