@@ -118,11 +118,11 @@ function doGruntJob(grunt: IGrunt) {
 		});
 
 
-		grunt.log.warn('this:::');
-		grunt.log.ok(JSON.stringify(this));
+		// grunt.log.warn('this:::');
+		// grunt.log.ok(JSON.stringify(this));
 
-		grunt.log.warn('options:::');
-		grunt.log.ok(JSON.stringify(options));
+		// grunt.log.warn('options:::');
+		// grunt.log.ok(JSON.stringify(options));
 
 		// Iterate over all specified file groups.
 		// this.files.forEach(function (f: any) {
@@ -172,8 +172,8 @@ function doGruntJob(grunt: IGrunt) {
 			let fileInfos: Array<FileInfo> = getImages(src, options.path_prefix);
 
 			// Print a success message.
-			grunt.log.ok(JSON.stringify(src));
-			grunt.log.ok(JSON.stringify(fileInfos));
+			//grunt.log.ok(JSON.stringify(src));
+			//grunt.log.ok(JSON.stringify(fileInfos));
 
 
 
@@ -213,21 +213,29 @@ function doGruntJob(grunt: IGrunt) {
 				fMain += toSave;
 				fAssets += file.assetPath;
 
-				grunt.log.writeln(toSave);
-				grunt.log.writeln(file.assetPath);
+				//grunt.log.writeln(toSave);
+				grunt.log.ok(file.assetPath);
 
 			});
 			// writeStreamMain.end();
 			// writeStream.end();
+
+
+
+
 			grunt.file.write(f.dest, fMain, { encoding: 'utf8' });
+
+
+			let assetsFileName = f.dest + '.assets';
 			if (options.assets_file === true) {
-				grunt.file.write(f.dest + '.assets', fAssets, { encoding: 'utf8' });
+				grunt.file.write(assetsFileName, fAssets, { encoding: 'utf8' });
 			}
 			else {
-				grunt.file.delete(f.dest + '.assets');
+				if (grunt.file.exists(assetsFileName)) {
+					grunt.file.delete(assetsFileName);
+				}
+
 			}
-
-
 
 		});
 	});

@@ -1,7 +1,7 @@
 {
 	"name": "grunt-imgs2file",
 	"description": "Collects image files in target folder and writes their content to destination file in Base64.",
-	"version": "0.1.129",
+	"version": "0.1.131",
 	"homepage": "https://github.com/cherchyk/grunt-imgs2file",
 	"author": {
 		"name": "Bohdan Cherchyk",

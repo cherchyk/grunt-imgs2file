@@ -55,10 +55,6 @@ function doGruntJob(grunt) {
             path_prefix: null,
             assets_file: false
         });
-        grunt.log.warn('this:::');
-        grunt.log.ok(JSON.stringify(this));
-        grunt.log.warn('options:::');
-        grunt.log.ok(JSON.stringify(options));
         this.files.forEach(function (f) {
             let src = f.src
                 .filter(function (filepath) {
@@ -71,8 +67,6 @@ function doGruntJob(grunt) {
                 }
             });
             let fileInfos = getImages(src, options.path_prefix);
-            grunt.log.ok(JSON.stringify(src));
-            grunt.log.ok(JSON.stringify(fileInfos));
             grunt.file.defaultEncoding = 'base64';
             let fMain = '';
             let fAssets = '';
@@ -86,15 +80,17 @@ function doGruntJob(grunt) {
                 let toSave = `${file.assetPath}${options.separator}data:${file.mime};base64,${content}`;
                 fMain += toSave;
                 fAssets += file.assetPath;
-                grunt.log.writeln(toSave);
-                grunt.log.writeln(file.assetPath);
+                grunt.log.ok(file.assetPath);
             });
             grunt.file.write(f.dest, fMain, { encoding: 'utf8' });
+            let assetsFileName = f.dest + '.assets';
             if (options.assets_file === true) {
-                grunt.file.write(f.dest + '.assets', fAssets, { encoding: 'utf8' });
+                grunt.file.write(assetsFileName, fAssets, { encoding: 'utf8' });
             }
             else {
-                grunt.file.delete(f.dest + '.assets');
+                if (grunt.file.exists(assetsFileName)) {
+                    grunt.file.delete(assetsFileName);
+                }
             }
         });
     });
