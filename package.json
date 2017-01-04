@@ -1,7 +1,7 @@
 {
   "name": "grunt-imgs2file",
   "description": "Collects image files in target folder and writes their content to destination file in Base64.",
-  "version": "0.1.0",
+  "version": "0.1.111",
   "homepage": "https://github.com/cherchyk/grunt-imgs2file",
   "author": {
     "name": "Bohdan Cherchyk",
@@ -28,12 +28,20 @@
     "test": "grunt test"
   },
   "devDependencies": {
-    "grunt-contrib-jshint": "^0.9.2",
+    "@types/lodash": "^4.14.45",
+    "grunt": "~0.4.5",
     "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-jshint": "^0.9.2",
     "grunt-contrib-nodeunit": "^0.3.3",
-    "grunt": "~0.4.5"
+    "grunt-ts": "^6.0.0-beta.3",
+    "grunt-tslint": "^4.0.0",
+    "tslint": "^4.2.0",
+    "typescript": "^2.1.4"
   },
   "keywords": [
     "gruntplugin"
-  ]
+  ],
+  "dependencies": {
+    "lodash": "^4.17.4"
+  }
 }

@@ -1,3 +1,6 @@
+*.tscache
+*.vscode
+*.baseDir.*
 node_modules
 npm-debug.log
 tmp
