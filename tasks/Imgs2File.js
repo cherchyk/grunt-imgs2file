@@ -39,12 +39,13 @@ function recursivelyGetAllImages(dir, pathPrefix) {
     });
     return result;
 }
-module.exports = function (grunt) {
+function doGruntJob(grunt) {
     grunt.registerMultiTask('imgs2file', 'Collects image files in target folder and writes their content to destination file in Base64.', function () {
         grunt.log.warn('HELLO again.');
+        grunt.log.ok(JSON.stringify(this.files));
         var options = this.options({
-            punctuation: '.',
-            separator: ', '
+            separator: grunt.option('separator') ? grunt.option('separator') : '|',
+            path_prefix: grunt.option('path_prefix') ? grunt.option('separator') : 'assets/'
         });
         this.files.forEach(function (f) {
             var src = f.src.filter(function (filepath) {
@@ -60,10 +61,11 @@ module.exports = function (grunt) {
                 return grunt.file.read(filepath);
             })
                 .join(grunt.util.normalizelf(options.separator));
-            src += options.punctuation;
+            src += '.';
             grunt.file.write(f.dest, src);
             grunt.log.writeln('File "' + f.dest + '" created.');
         });
     });
-};
+}
+module.exports = doGruntJob;
 //# sourceMappingURL=imgs2file.js.map

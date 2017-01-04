@@ -15,6 +15,7 @@ import { WriteStream } from 'fs';
 
 import * as _ from 'lodash';
 
+import * as gruntObject from 'grunt';
 
 interface ImgType {
 	mime: string;
@@ -27,6 +28,11 @@ const IMG_TYPES: Array<ImgType> = [
 	{ ext: 'gif', mime: 'image/gif' }];
 const PATH_SEP = '/';
 const ASSET_SEP = '|';
+
+interface Options {
+	separator: string;
+	path_prefix: string;
+}
 
 interface FileInfo {
 	mime: string;
@@ -78,8 +84,7 @@ function recursivelyGetAllImages(dir: string, pathPrefix: string): Array<FileInf
 
 
 
-
-export = function (grunt) {
+function doGruntJob(grunt: IGrunt) {
 
 	// Please see the Grunt documentation for more information regarding task
 	// creation: http://gruntjs.com/creating-tasks
@@ -88,17 +93,18 @@ export = function (grunt) {
 
 		grunt.log.warn('HELLO again.');
 
+		grunt.log.ok(JSON.stringify(this.files));
 
 		// Merge task-specific and/or target-specific options with these defaults.
-		var options = this.options({
-			punctuation: '.',
-			separator: ', '
+		var options: Options = this.options({
+			separator: grunt.option('separator') ? grunt.option('separator') : '|',
+			path_prefix: grunt.option('path_prefix') ? grunt.option('separator') : 'assets/'
 		});
 
 		// Iterate over all specified file groups.
-		this.files.forEach(function (f) {
+		this.files.forEach(function (f: any) {
 			// Concat specified files.
-			var src = f.src.filter(function (filepath) {
+			var src = f.src.filter(function (filepath: any) {
 				// Warn on and remove invalid source files (if nonull was set).
 				if (!grunt.file.exists(filepath)) {
 					grunt.log.warn('Source file "' + filepath + '" not found.');
@@ -108,14 +114,14 @@ export = function (grunt) {
 					return true;
 				}
 			})
-				.map(function (filepath) {
+				.map(function (filepath: any) {
 					// Read file source.
 					return grunt.file.read(filepath);
 				})
 				.join(grunt.util.normalizelf(options.separator));
 
 			// Handle options.
-			src += options.punctuation;
+			src += '.';
 
 			// Write the destination file.
 			grunt.file.write(f.dest, src);
@@ -126,3 +132,5 @@ export = function (grunt) {
 	});
 
 }
+
+export = doGruntJob;

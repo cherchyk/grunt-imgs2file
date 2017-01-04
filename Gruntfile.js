@@ -12,10 +12,25 @@ module.exports = function (grunt) {
 
 	// Project configuration.
 	grunt.initConfig({
-		jshint: {
-			all: [], //'Gruntfile.js', 'tasks/*.js', '<%= nodeunit.tests %>'
+		jshint_old: {
+			all: ['Gruntfile.js', 'tasks/*.js', '<%= nodeunit.tests %>'],
 			options: {
 				jshintrc: '.jshintrc'
+			}
+		},
+
+		jshint: {
+			options: {
+				jshintrc: '.jshintrc'
+			},
+			gruntfile: {
+				src: 'Gruntfile.js'
+			},
+			src: {
+				src: ['src/**/*.*']
+			},
+			test: {
+				src: ['test-src/**/*.*']
 			}
 		},
 
@@ -23,7 +38,7 @@ module.exports = function (grunt) {
 		clean: {
 			all: ['tmp', 'tasks/**/*'],
 			tests: ['tmp'],
-			release: ['tasks/.baseDir*']
+			ts: ['tasks/.baseDir*']
 		},
 
 		// Configuration to be run (and then tested).
@@ -90,6 +105,22 @@ module.exports = function (grunt) {
 			}
 		},
 
+		watch: {
+			gruntfile: {
+				files: '<%= jshint.gruntfile.src %>',
+				tasks: ['jshint:gruntfile']
+			},
+			src: {
+				files: ['<%= jshint.src.src %>', '<%= jshint.test.src %>'],
+				tasks: ['clean:all', 'ts', 'clean:ts', 'tslint:src']
+			},
+			srcandtest: {
+				files: ['<%= jshint.src.src %>', '<%= jshint.test.src %>'],
+				tasks: ['ts', 'copy:source', 'copy:test', 'copy:testsrc', 'clean:ts', 'tslint', 'nodeunit']
+			}
+
+		},
+
 	});
 
 	// Actually load this plugin's task(s).
@@ -99,6 +130,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-nodeunit');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-ts');
 	grunt.loadNpmTasks("grunt-tslint");
 
@@ -107,6 +139,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('test', ['clean:tests', 'imgs2file', 'nodeunit']);
 
 	// By default, lint and run all tests.
-	grunt.registerTask('default', ['clean:all', 'ts', 'jshint', 'clean:release', 'test']);
+	grunt.registerTask('default', ['clean:all', 'ts', 'clean:ts']); //, 'test'
+	grunt.registerTask('dw', ['default', 'watch:src']);
 
 };

@@ -6,7 +6,6 @@
 		"forin": false,
 		"indent": false,
 		"label-position": true,
-		"label-undefined": true,
 		"max-line-length": [
 			true,
 			550
@@ -15,9 +14,7 @@
 		"no-bitwise": false,
 		"no-console": false,
 		"no-construct": true,
-		"no-constructor-vars": false,
 		"no-debugger": false,
-		"no-duplicate-key": true,
 		"no-duplicate-variable": true,
 		"no-empty": true,
 		"no-eval": true,
@@ -25,8 +22,6 @@
 		"no-switch-case-fall-through": true,
 		"no-trailing-whitespace": false,
 		"no-unused-expression": true,
-		"no-unused-variable": false,
-		"no-unreachable": true,
 		"no-use-before-declare": false,
 		"no-var-requires": false,
 		"one-line": [
@@ -51,7 +46,7 @@
 			"variableDeclarator",
 			"memberVariableDeclarator"
 		],
-		"use-strict": false,
+		//"use-strict": false,
 		"variable-name": [
 			false,
 			"allow-leading-underscore"
