@@ -1,5 +1,5 @@
 /*
- * grunt-Imgs2File
+ * grunt-imgs2file
  * https://github.com/cherchyk/grunt-imgs2file
  *
  * Copyright (c) 2017 Bohdan Cherchyk
@@ -8,7 +8,7 @@
 
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
     },
 
     // Configuration to be run (and then tested).
-    Imgs2File: {
+    imgs2file: {
       default_options: {
         options: {
         },
@@ -65,7 +65,7 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'Imgs2File', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'imgs2file', 'nodeunit']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);

@@ -1,4 +1,4 @@
-# grunt-Imgs2File
+# grunt-imgs2file
 
 > Collects image files in target folder and writes their content to destination file in Base64.
 
@@ -8,23 +8,23 @@ This plugin requires Grunt `~0.4.5`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-Imgs2File --save-dev
+npm install grunt-imgs2file --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-Imgs2File');
+grunt.loadNpmTasks('grunt-imgs2file');
 ```
 
-## The "Imgs2File" task
+## The "imgs2file" task
 
 ### Overview
-In your project's Gruntfile, add a section named `Imgs2File` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `imgs2file` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  Imgs2File: {
+  imgs2file: {
     options: {
       // Task-specific options go here.
     },
@@ -56,7 +56,7 @@ In this example, the default options are used to do something with whatever. So 
 
 ```js
 grunt.initConfig({
-  Imgs2File: {
+  imgs2file: {
     options: {},
     files: {
       'dest/default_options': ['src/testing', 'src/123'],
@@ -70,7 +70,7 @@ In this example, custom options are used to do something else with whatever else
 
 ```js
 grunt.initConfig({
-  Imgs2File: {
+  imgs2file: {
     options: {
       separator: ': ',
       punctuation: ' !!!',
