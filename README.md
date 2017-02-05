@@ -39,15 +39,21 @@ grunt.initConfig({
 
 #### options.separator
 Type: `String`
-Default value: `',  '`
+Default value: `'|'`
 
-A string value that is used to do something with whatever.
+A string value that is used as a separator in file.
 
-#### options.punctuation
+#### options.path_prefix
 Type: `String`
-Default value: `'.'`
+Default value: `null`
 
-A string value that is used to do something else with whatever else.
+A string value that is used as a prefix to file path.
+
+#### options.assets_file
+Type: `boolean`
+Default value: `false`
+
+If `true` then a new file will be generated just with file paths.
 
 ### Usage Examples
 
@@ -79,6 +85,31 @@ grunt.initConfig({
       'dest/default_options': ['src/testing', 'src/123'],
     },
   },
+
+  imgs2file: {
+    options: {},
+	pngonly: {
+      src: ['src/imgs/*.png'],
+      dest: 'build/img/pngonly.txt'
+	},
+	folderonly: {
+      src: ['src/imgs/'],
+	  dest: 'tmp11/folderonly.txt',
+	  options: {
+        path_prefix: "asset/",
+		assets_file: true
+      },
+	},
+	folderstar: {
+      src: ['src/imgs/*'],
+	  dest: 'tmp11/folderstar.txt',
+	  options: {
+        "path_prefix": "abc/"
+	  },
+		}
+	}
+
+
 });
 ```
 
